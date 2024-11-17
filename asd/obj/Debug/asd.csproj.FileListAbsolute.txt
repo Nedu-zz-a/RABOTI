@@ -1,0 +1,7 @@
+C:\Users\dinar\source\repos\asd\asd\bin\Debug\asd.exe.config
+C:\Users\dinar\source\repos\asd\asd\bin\Debug\asd.exe
+C:\Users\dinar\source\repos\asd\asd\bin\Debug\asd.pdb
+C:\Users\dinar\source\repos\asd\asd\obj\Debug\asd.csproj.AssemblyReference.cache
+C:\Users\dinar\source\repos\asd\asd\obj\Debug\asd.csproj.CoreCompileInputs.cache
+C:\Users\dinar\source\repos\asd\asd\obj\Debug\asd.exe
+C:\Users\dinar\source\repos\asd\asd\obj\Debug\asd.pdb
