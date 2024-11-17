@@ -13,23 +13,69 @@ namespace sd
             string[] Dealer = new string[7];
             string[,] Cards =
             {
-                { "2","2" },
-                { "3", "3" },
-                { "4", "4" },
-                { "5", "5" },
-                { "6", "6" },
-                { "7", "7" },
-                { "9", "9" },
-                { "10", "10" },
-                { "J", "10" },
-                { "D", "10" },
-                { "K", "10" },
-                { "A", "11" }
+                { "2♥","2" },
+                { "3♥", "3" },
+                { "4♥", "4" },
+                { "5♥", "5" },
+                { "6♥", "6" },
+                { "7♥", "7" },
+                { "9♥", "9" },
+                { "10♥", "10" },
+                { "J♥", "10" },
+                { "D♥", "10" },
+                { "K♥", "10" },
+                { "A♥", "11" },
+                { "2♦","2" },
+                { "3♦", "3" },
+                { "4♦", "4" },
+                { "5♦", "5" },
+                { "6♦", "6" },
+                { "7♦", "7" },
+                { "9♦", "9" },
+                { "10♦", "10" },
+                { "J♦", "10" },
+                { "D♦", "10" },
+                { "K♦", "10" },
+                { "A♦", "11" },
+                { "2♣","2" },
+                { "3♣", "3" },
+                { "4♣", "4" },
+                { "5♣", "5" },
+                { "6♣", "6" },
+                { "7♣", "7" },
+                { "9♣", "9" },
+                { "10♣", "10" },
+                { "J♣", "10" },
+                { "D♣", "10" },
+                { "K♣", "10" },
+                { "A♣", "11" },
+                { "2♠","2" },
+                { "3♠", "3" },
+                { "4♠", "4" },
+                { "5♠", "5" },
+                { "6♠", "6" },
+                { "7♠", "7" },
+                { "9♠", "9" },
+                { "10♠", "10" },
+                { "J♠", "10" },
+                { "D♠", "10" },
+                { "K♠", "10" },
+                { "A♠", "11" }
             };
 
             Dealer[0] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
-            Player[0] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
-            Player[1] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+            while (status == false)
+            {
+                Player[0] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+                proverka(Player, Dealer, 0);
+            }
+            status = false;
+            while (status == false)
+            {
+                Player[1] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+                proverka(Player, Dealer, 1);
+            }
+            status = false;
             Console.WriteLine($"Карты диллера: {Dealer[0]}, *\nВаши карты: {Player[0]}, {Player[1]}\nВзять карту: +\nСтоп: -");
 
             string step = Console.ReadLine();
@@ -39,12 +85,17 @@ namespace sd
                 {
                     if (Player[i] == null)
                     {
-                        Player[i] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+                        while (status == false )
+                        {
+                            Player[i] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+                            proverka(Player, Dealer,i);
+                        }
+                        status = false;
                         summ = 0;
                         perebor(Player, Cards);
                         Console.Write($"Вам выпала карта... ");
                         Thread.Sleep(1000);
-                        Console.WriteLine($"{Player[i]}, выш счёт - {summ}");
+                        Console.WriteLine($"{Player[i]}");
                         if (summ > 21)
                         {
                             Thread.Sleep(500);
@@ -59,7 +110,14 @@ namespace sd
                 }
             }
 
-            int Cards_Player = summ;
+            int Cards_Player = -1;
+
+            if (summ != -1)
+            {
+                summ = 0;
+                perebor(Player, Cards);
+                Cards_Player = summ;
+            }
 
             summ = 0;
             if (Cards_Player != -1)
@@ -70,12 +128,17 @@ namespace sd
                     {
                         if (Dealer[i] == null)
                         {
-                            Dealer[i] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+                            while (status == false)
+                            {
+                                Dealer[i] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+                                proverka(Dealer, Player, i);
+                            }
+                            status = false;
                             summ = 0;
                             perebor(Dealer, Cards);
                             Console.Write($"Диллер вытянул... ");
                             Thread.Sleep(1000);
-                            Console.Write($"{Dealer[i]}, его счёт - {summ}\n");
+                            Console.WriteLine($"{Dealer[i]}");
                             if (summ > 21)
                             {
                                 {
@@ -133,6 +196,26 @@ namespace sd
                     }
                 }
             }
+        }
+
+        public static bool status = false;
+
+        static void proverka(string[] a, string[] b, int c)
+        {
+            bool kash = true;
+            for (int i = 0; i < a.Length; i++)
+            {
+                for (int j = 0;j < c; j++)
+                {
+                    if (a[c] == a[j] || a[c] == b[i])
+                    {
+                        kash = false;
+                        break;
+
+                    }
+                }
+            }
+            status = kash;
         }
     }
 }
