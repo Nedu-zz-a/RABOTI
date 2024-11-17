@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Threading;
 
 namespace sd
@@ -59,6 +61,7 @@ namespace sd
             string[] Dealer = new string[7];
             string[,] Cards =
             {
+                { "1","1" },
                 //{ "2♥","2" },
                 //{ "3♥", "3" },
                 //{ "4♥", "4" },
@@ -112,16 +115,16 @@ namespace sd
             Array.Clear(Player, 0, Player.Length);
             Array.Clear(Dealer, 0, Player.Length);
 
-            Dealer[0] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+            Dealer[0] = Cards[rnd.Next(1, Cards.GetLength(0)), 0];
             while (status == false)
             {
-                Player[0] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+                Player[0] = Cards[rnd.Next(1, Cards.GetLength(0)), 0];
                 proverka(Player, Dealer, 0);
             }
             status = false;
             while (status == false)
             {
-                Player[1] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+                Player[1] = Cards[rnd.Next(1, Cards.GetLength(0)), 0];
                 proverka(Player, Dealer, 1);
             }
             status = false;
@@ -136,7 +139,7 @@ namespace sd
                     {
                         while (status == false )
                         {
-                            Player[i] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+                            Player[i] = Cards[rnd.Next(1, Cards.GetLength(0)), 0];
                             proverka(Player, Dealer,i);
                         }
                         status = false;
@@ -148,7 +151,7 @@ namespace sd
                         if (summ > 21)
                         {
                             Thread.Sleep(500);
-                            Console.WriteLine("Перебор. Вы проебали хату)");
+                            Console.WriteLine("Перебор. Вы проебали)");
                             lose_or_win(0);
                             step = "LOOOSER";
                             summ = -1;
@@ -159,7 +162,7 @@ namespace sd
                     }
                 }
             }
-
+            Array.Clear(count_A, 0, count_A.Length );
             int Cards_Player = -1;
 
             if (summ != -1)
@@ -180,7 +183,7 @@ namespace sd
                         {
                             while (status == false)
                             {
-                                Dealer[i] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
+                                Dealer[i] = Cards[rnd.Next(1, Cards.GetLength(0)), 0];
                                 proverka(Dealer, Player, i);
                             }
                             status = false;
@@ -203,6 +206,8 @@ namespace sd
                         }
                     }
                 }
+                Array.Clear(count_A, 0, count_A.Length);
+
                 int Cards_Dealer = summ;
                 if (Cards_Dealer != -1)
                 {
@@ -227,11 +232,12 @@ namespace sd
             Start();
         }
 
-        public static int summ = 0;
+        static int summ = 0;
+
+        static int[] count_A = new int[4];
 
         static void perebor(string[] a, string[,] b)
         {
-
             int kash = 0;
 
             for (int i = 0; i < a.Length; i++)
@@ -245,6 +251,29 @@ namespace sd
                     else
                     {
                         summ += Convert.ToInt16(b[kash, 1]);
+                        while (summ > 21)
+                        {
+                            int schetchik = 0;
+                            for (int e = 0; e < i; e++)
+                            {
+                                if (a[e] == "A♥" || a[e] == "A♦" || a[e] == "A♣" || a[e] == "A♠")
+                                {
+                                    a[e] = "1";
+                                    Console.WriteLine(a[e]);
+                                    summ -= 10;
+                                    schetchik = 1;
+                                    break;
+                                }
+                                else
+                                {
+                                    schetchik = 0;
+                                }
+                            }
+                            if (schetchik == 0)
+                            {
+                                break;
+                            }
+                        }
                         kash = 0;
                         break;
                     }
