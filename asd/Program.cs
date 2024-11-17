@@ -5,63 +5,112 @@ namespace sd
 {
     internal class Program
     {
+
+        static int balance = 500;
+        static int game_bet {  get; set; }
+
         static void Main(string[] args)
         {
+            Console.WriteLine("Желаете ли вы окунуться в озеро азарта и смачно обонкротиться в\n--------------------  B L A C K   J A C K  --------------------\n");
+            Console.WriteLine("Нажмите любую клавишу для начала игры)\n");
+            Console.ReadKey(intercept: true);
+            Start();
+        }
+
+        static void Start()
+        {
+            Console.Clear();
+            Console.WriteLine("--------------------B L A C K   J A C K--------------------");
+            if (balance == 0)
+            {
+                Console.WriteLine("Да ты всё проебал, иди отдохни");
+            }
+            else
+            {
+                Console.Write($"Ваш баланс {balance}\nУкажите вашу ставку: ");
+                game_bet = Convert.ToInt32(Console.ReadLine());
+                while (game_bet < 1 || game_bet > balance)
+                {
+                    Console.WriteLine("Не борзей.\nУкажите вашу ставку: ");
+                    game_bet = Convert.ToInt32(Console.ReadLine());
+                }
+                Console.Clear();
+                int i = 0;
+                while (i != 5)
+                {
+                    Console.Write("Ставки сделанны");
+                    Thread.Sleep(200);
+                    Console.Write(".");
+                    Thread.Sleep(200);
+                    Console.Write(".");
+                    Thread.Sleep(200);
+                    Console.Write(".");
+                    Console.Clear();
+                    i++;
+                }
+                Game();
+            }
+        }
+
+        static void Game() { 
             Random rnd = new Random();
 
             string[] Player = new string[7];
             string[] Dealer = new string[7];
             string[,] Cards =
             {
-                { "2♥","2" },
-                { "3♥", "3" },
-                { "4♥", "4" },
-                { "5♥", "5" },
-                { "6♥", "6" },
-                { "7♥", "7" },
-                { "9♥", "9" },
-                { "10♥", "10" },
-                { "J♥", "10" },
-                { "D♥", "10" },
-                { "K♥", "10" },
+                //{ "2♥","2" },
+                //{ "3♥", "3" },
+                //{ "4♥", "4" },
+                //{ "5♥", "5" },
+                //{ "6♥", "6" },
+                //{ "7♥", "7" },
+                //{ "9♥", "9" },
+                //{ "10♥", "10" },
+                //{ "J♥", "10" },
+                //{ "D♥", "10" },
+                //{ "K♥", "10" },
                 { "A♥", "11" },
-                { "2♦","2" },
-                { "3♦", "3" },
-                { "4♦", "4" },
-                { "5♦", "5" },
-                { "6♦", "6" },
-                { "7♦", "7" },
-                { "9♦", "9" },
-                { "10♦", "10" },
-                { "J♦", "10" },
-                { "D♦", "10" },
-                { "K♦", "10" },
+                //{ "2♦","2" },
+                //{ "3♦", "3" },
+                //{ "4♦", "4" },
+                //{ "5♦", "5" },
+                //{ "6♦", "6" },
+                //{ "7♦", "7" },
+                //{ "9♦", "9" },
+                //{ "10♦", "10" },
+                //{ "J♦", "10" },
+                //{ "D♦", "10" },
+                //{ "K♦", "10" },
                 { "A♦", "11" },
-                { "2♣","2" },
-                { "3♣", "3" },
-                { "4♣", "4" },
-                { "5♣", "5" },
-                { "6♣", "6" },
-                { "7♣", "7" },
-                { "9♣", "9" },
-                { "10♣", "10" },
-                { "J♣", "10" },
-                { "D♣", "10" },
-                { "K♣", "10" },
-                { "A♣", "11" },
-                { "2♠","2" },
-                { "3♠", "3" },
-                { "4♠", "4" },
-                { "5♠", "5" },
-                { "6♠", "6" },
-                { "7♠", "7" },
+                //{ "2♣","2" },
+                //{ "3♣", "3" },
+                //{ "4♣", "4" },
+                //{ "5♣", "5" },
+                //{ "6♣", "6" },
+                //{ "7♣", "7" },
+                //{ "9♣", "9" },
+                //{ "10♣", "10" },
+                //{ "J♣", "10" },
+                //{ "D♣", "10" },
+                //{ "K♣", "10" },
+                //{ "A♣", "11" },
+                //{ "2♠","2" },
+                //{ "3♠", "3" },
+                //{ "4♠", "4" },
+                //{ "5♠", "5" },
+                //{ "6♠", "6" },
+                //{ "7♠", "7" },
                 { "9♠", "9" },
                 { "10♠", "10" },
                 { "J♠", "10" },
-                { "D♠", "10" },
-                { "K♠", "10" },
+                //{ "D♠", "10" },
+                //{ "K♠", "10" },
                 { "A♠", "11" }
             };
+
+            Array.Clear(Player, 0, Player.Length);
+            Array.Clear(Dealer, 0, Player.Length);
 
             Dealer[0] = Cards[rnd.Next(0, Cards.GetLength(0)), 0];
             while (status == false)
@@ -76,7 +125,7 @@ namespace sd
                 proverka(Player, Dealer, 1);
             }
             status = false;
-            Console.WriteLine($"Карты диллера: {Dealer[0]}, *\nВаши карты: {Player[0]}, {Player[1]}\nВзять карту: +\nСтоп: -");
+            Console.WriteLine($"Карты диллера: {Dealer[0]}, *\nВаши карты: {Player[0]}, {Player[1]}\nВзять карту: +");
 
             string step = Console.ReadLine();
             while (step == "+")
@@ -100,6 +149,7 @@ namespace sd
                         {
                             Thread.Sleep(500);
                             Console.WriteLine("Перебор. Вы проебали хату)");
+                            lose_or_win(0);
                             step = "LOOOSER";
                             summ = -1;
                             break;
@@ -144,6 +194,7 @@ namespace sd
                                 {
                                     Thread.Sleep(1000);
                                     Console.WriteLine("Диллер перебрал. Ты победил)");
+                                    lose_or_win(1);
                                     summ = -1;
                                     break;
                                 }
@@ -159,18 +210,21 @@ namespace sd
                     if (Cards_Dealer > Cards_Player)
                     {
                         Console.WriteLine("Ты проиграл(");
+                        lose_or_win(0);
                     }
                     else if (Cards_Dealer < Cards_Player)
                     {
                         Console.WriteLine("Ты выйграл)");
+                        lose_or_win(1);
                     }
                     else
                     {
                         Console.WriteLine("Да у вас ничья...");
                     }
                 }
-                Console.ReadKey();
             }
+            Console.ReadKey(intercept: true);
+            Start();
         }
 
         public static int summ = 0;
@@ -216,6 +270,18 @@ namespace sd
                 }
             }
             status = kash;
+        }
+
+        static void lose_or_win(int i)
+        {
+            if (i == 0)
+            {
+                balance -= game_bet;
+            }
+            else if (i == 1)
+            {
+                balance += game_bet;
+            }
         }
     }
 }
